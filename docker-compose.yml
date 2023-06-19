@@ -2,13 +2,12 @@ services:
   notebook:
     build:
       context: .
+    shm_size: '1g' # increase shared memory to 1GB
     deploy:
       resources:
         reservations:
           devices:
             - capabilities: [gpu]
-    environment:
-      - COMMANDLINE_ARGS=--allow-code --medvram --xformers --enable-insecure-extension-access --api
     ports:
       - "8888:8888"
     tty: true
