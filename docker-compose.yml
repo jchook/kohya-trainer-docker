@@ -1,0 +1,16 @@
+services:
+  notebook:
+    build:
+      context: .
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - capabilities: [gpu]
+    environment:
+      - COMMANDLINE_ARGS=--allow-code --medvram --xformers --enable-insecure-extension-access --api
+    ports:
+      - "8888:8888"
+    tty: true
+    volumes:
+      - "./project:/home/app/project:rw"
