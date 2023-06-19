@@ -75,19 +75,24 @@ RUN apt-get install -y \
     libglib2.0-0
 
 RUN apt-get install -y \
-    libnvrtc11.2 \
-    nvidia-cuda-toolki
+    nvidia-cuda-toolkit
 
+# Upgrade bitsandbytes
+# Note, we may need to compile it from source here. The good news is that
+# bitsandbytes does not take long to compile.
+RUN pip install -U bitsandbytes==0.39.0
+
+RUN mkdir -p /content /home/app/.cache \
+  && chown $APP_UID:$APP_GID /content /home/app/.cache
+VOLUME /content
+VOLUME /home/app/.cache
 
 # Switch from root
 USER $APP_UID:$APP_GID
 
-RUN cd && mkdir -p project
-
 # Hint: mount this volume to avoid downloading stuff every time
 # See docker-compose.yml for an example
-VOLUME /home/app/project
-WORKDIR /home/app/project
+WORKDIR /content
 
 # Load the tcmalloc library
 ENV LD_PRELOAD=/usr/lib/x86_64-linux-gnu/libtcmalloc.so.4

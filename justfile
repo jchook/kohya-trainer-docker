@@ -12,14 +12,14 @@ build:
 
 # Access a running docker container
 exec *args="bash":
-  docker compose exec webui "$@"
+  docker compose exec notebook "$@"
 
 readme:
   glow README.md
 
 # Run a shell in a new container
-sh:
-  docker compose run webui bash
+run *args="bash":
+  docker compose run notebook "$@"
 
 # Test to see if your GPU is correctly connected to docker
 test-gpu:

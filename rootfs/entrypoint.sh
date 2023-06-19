@@ -25,7 +25,7 @@ if [ ! -f "$ACCELERATE_CONFIG" ]; then
 fi
 
 # Environment
-CUDA_PATH="/usr/local/cuda/lib64"
+CUDA_PATH="/usr/lib/x86_64-linux-gnu"
 export LD_LIBRARY_PATH="${LD_LIBRARY_PATH}:${CUDA_PATH}"
 export LD_PRELOAD="libtcmalloc.so"
 export TF_CPP_MIN_LOG_LEVEL="3"

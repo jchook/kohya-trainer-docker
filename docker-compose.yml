@@ -13,4 +13,5 @@ services:
       - "8888:8888"
     tty: true
     volumes:
-      - "./project:/home/app/project:rw"
+      - "./content:/content:rw"
+      - "./.cache:/home/app/.cache:rw"
