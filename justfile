@@ -23,7 +23,7 @@ run *args="bash":
 
 # Test to see if your GPU is correctly connected to docker
 test-gpu:
-  docker compose run webui python3 -c 'import torch; torch.cuda.is_available()'
+  docker compose run notebook python3 -c 'import torch; torch.cuda.is_available()'
 
 # Start the docker container
 up *args:
