@@ -31,10 +31,7 @@ How to Use
 Enjoy a streamlined experience with [`just`](https://github.com/casey/just):
 
 ```sh
-# Build with your user ID
 just build
-
-# Run
 just up
 ```
 
@@ -44,7 +41,8 @@ Otherwise, you can use the standard docker tools as expected:
 docker compose up
 ```
 
-## See Also
+See Also
+--------
 
 - [jchook/stable-diffusion-webui-docker](https://github.com/jchook/stable-diffusion-webui-docker)
 - [P2Enjoy/kohya_ss-docker](https://github.com/P2Enjoy/kohya_ss-docker)
