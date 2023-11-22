@@ -58,13 +58,13 @@ RUN pip install -U --extra-index-url https://download.pytorch.org/whl/cu118 \
 
 # Enable this to run Stability-AI scripts
 # e.g. image2video via https://github.com/Stability-AI/generative-models
-# RUN apt-get update && apt-get install -y ffmpeg python3.10-venv
+#RUN apt-get update && apt-get install -y ffmpeg python3.10-venv
 
 # Enable this for Dataset Maker
 # https://github.com/hollowstrawberry/kohya-colab/tree/main
 # https://docs.voxel51.com/getting_started/troubleshooting.html#troubleshooting-linux-imports
-# RUN pip install -U fiftyone fiftyone-db==0.4.3
-# RUN apt-get update && apt-get install -y libssl-dev
+#RUN pip install -U fiftyone fiftyone-db==0.4.3
+#RUN apt-get update && apt-get install -y libssl-dev
 
 # Hint: set these to your user ID
 # See https://stackoverflow.com/questions/56844746/how-to-set-uid-and-gid-in-docker-compose
