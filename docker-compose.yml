@@ -1,5 +1,5 @@
 services:
-  notebook:
+  lab:
     build:
       context: .
     shm_size: '1g' # increase shared memory to 1GB

@@ -31,23 +31,40 @@ RUN apt-get -y update \
   lz4 \
   nvidia-cuda-toolkit
 
-# Apparently the maintainer does not tag releases
-ARG KOHYA_TRAINER_BRANCH=main
-
 # Install python dependencies
-RUN git clone --branch "${KOHYA_TRAINER_BRANCH}" https://github.com/Linaqruf/kohya-trainer.git \
-  && cd kohya-trainer \
-  && pip install -r requirements.txt \
-  && pip install -U --extra-index-url https://download.pytorch.org/whl/cu118 \
-    bitsandbytes==0.39.0 \
-    jupyter==1.0.0 \
-    torch==2.0.0+cu118 \
-    torchvision==0.15.1+cu118 \
-    torchaudio==2.0.1+cu118 \
-    torchtext==0.15.1 \
-    torchdata==0.6.0 \
-    triton==2.0.0 \
-    xformers==0.0.19
+RUN pip install -U --extra-index-url https://download.pytorch.org/whl/cu118 \
+    torch==2.0.1+cu118 \
+    torchvision==0.15.2+cu118 \
+    xformers==0.0.20 \
+  && pip install -U \
+    accelerate==0.23.0 \
+    albumentations==1.3.0 \
+    altair==4.2.2 \
+    bitsandbytes==0.41.1 \
+    diffusers[torch]==0.21.2 \
+    easygui==0.98.3 \
+    einops==0.6.0 \
+    ftfy==6.1.1 \
+    huggingface-hub==0.15.1 \
+    open-clip-torch==2.20.0 \
+    opencv-python==4.7.0.68 \
+    pytorch-lightning==1.9.0 \
+    safetensors==0.3.1 \
+    tensorboard==2.10.1 \
+    toml==0.10.2 \
+    transformers==4.30.2 \
+    voluptuous==0.13.1 \
+  && pip install -U jupyterlab
+
+# Enable this to run Stability-AI scripts
+# e.g. image2video via https://github.com/Stability-AI/generative-models
+# RUN apt-get update && apt-get install -y ffmpeg python3.10-venv
+
+# Enable this for Dataset Maker
+# https://github.com/hollowstrawberry/kohya-colab/tree/main
+# https://docs.voxel51.com/getting_started/troubleshooting.html#troubleshooting-linux-imports
+# RUN pip install -U fiftyone fiftyone-db==0.4.3
+# RUN apt-get update && apt-get install -y libssl-dev
 
 # Hint: set these to your user ID
 # See https://stackoverflow.com/questions/56844746/how-to-set-uid-and-gid-in-docker-compose
@@ -76,8 +93,8 @@ WORKDIR /content
 # Load the tcmalloc library
 ENV LD_PRELOAD=/usr/lib/x86_64-linux-gnu/libtcmalloc.so.4
 
-# Forward these build-args to the runtime environment
-ENV KOHYA_TRAINER_BRANCH=${KOHYA_TRAINER_BRANCH}
+# Persist the jupyterlab directory
+# ENV JUPYTERLAB_DIR=/content/jupyter/lab
 
 # Copy entrypoint.sh
 COPY ./rootfs/ /
@@ -86,4 +103,4 @@ COPY ./rootfs/ /
 ENTRYPOINT [ "/entrypoint.sh" ]
 
 # Run notebook
-CMD ["jupyter", "notebook", "--ip='*'", "--port=8888", "--no-browser"]
+CMD ["jupyter-lab", "--ip='0.0.0.0'", "--port=8888", "--no-browser"]
