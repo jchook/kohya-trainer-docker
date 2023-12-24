@@ -18,9 +18,15 @@ if [ ! -d kohya-trainer ]; then
   git clone --branch "${KOHYA_TRAINER_BRANCH:-main}" https://github.com/Linaqruf/kohya-trainer.git
 fi
 
+if [ ! -d kohya_ss ]; then
+  echo "Cloning kohya_ss..." >&2
+  git clone --branch "${KOHYA_SS_BRANCH:-v22.3.0}" https://github.com/bmaltais/kohya_ss.git
+fi
+
 # Accelerate config
 ACCELERATE_CONFIG=accelerate_config/config.yaml
 if [ ! -f "$ACCELERATE_CONFIG" ]; then
+  echo "Generating accelerate config..." >&2
   python -c "from accelerate.utils import write_basic_config; write_basic_config(save_location='$ACCELERATE_CONFIG');"
 fi
 
@@ -43,5 +49,6 @@ for mydir in "$TRAINING_DIR" "$CONFIG_DIR" "$PRETRAINED_MODEL_DIR" "$VAE_DIR"; d
 done
 
 # Execute whatever
+echo "Executing command:" >&2
 echo "# $*" >&2
 exec "$@"

@@ -1,15 +1,18 @@
 services:
-  lab:
+  app:
     build:
       context: .
     shm_size: '1g' # increase shared memory to 1GB
+    init: true
     deploy:
       resources:
         reservations:
           devices:
             - capabilities: [gpu]
     ports:
-      - "8888:8888"
+      - "8888:8888" # Jupyter Lab
+      - "7861:7861" # Kohya GUI
+      - "6006:6006" # Tensorboard
     tty: true
     volumes:
       - "./content:/content:rw"
